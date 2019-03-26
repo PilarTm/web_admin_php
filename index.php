@@ -37,11 +37,11 @@
  */
 
 function get_version(){
-  return "0.0.9.5";
+  return "1.1";
 }
 
 function get_brand(){
-  return "NikaPilar";
+  return '2DeDi';
 }
 
 /*
