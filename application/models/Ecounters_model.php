@@ -190,7 +190,6 @@ class Ecounters_model extends CI_Model {
     $this->load->model("data_model");
 
     $d = new DateTime();
-    $this->db->where('time >=' , $d->format("Y-m-d 00:00:00"));
     $this->db->where('meter_id' , $this->id);
     $this->db->where('parameter_id' , (int) $id_parameter);
     $this->db->order_by('time' , "DESC");
