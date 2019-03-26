@@ -1,0 +1,60 @@
+{include file="admin/helpers/head.html"}
+
+
+{include file="admin/helpers/logo.html"}
+{include file="admin/helpers/nav.html"}
+
+<!-- Main content-->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header-title">
+                    <h3 class="m-b-xs">{$lang->line("converters.title")}</h3>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12 col-xs-12">
+                <div class="panel panel-filled">
+
+                    <div class="panel-body table-responsive" id="converter_list"></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script type="text/template" id="converter_list_tpl">
+        {include file="admin/converters/helpers/list.html"}
+    </script>
+
+
+    <script type="text/template" id="modal_edit_converter_tpl">
+        {include file="admin/converters/helpers/modal_edit.html"}
+    </script>
+
+    <script type="text/template" id="modal_delete_tpl">
+        {include file="admin/converters/helpers/modal_delete.html"}
+    </script>
+
+    <script src="/ladmin/scripts/models/mark_converters.js"></script>
+    <script src="/ladmin/scripts/models/model_converters.js"></script>
+    <script src="/ladmin/scripts/models/converters.js"></script>
+
+
+    <script src="/ladmin/scripts/collections/mark_converters.js"></script>
+    <script src="/ladmin/scripts/collections/model_converters.js"></script>
+    <script src="/ladmin/scripts/collections/converters.js"></script>
+
+
+    <script src="/ladmin/scripts/views/converters/model_edit.js"></script>
+    <script src="/ladmin/scripts/views/converters/model_delete.js"></script>
+    <script src="/ladmin/scripts/views/converters/index.js"></script>
+
+
+    {include file="admin/helpers/footer.html"}

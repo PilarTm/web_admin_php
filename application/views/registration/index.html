@@ -1,0 +1,133 @@
+{include file="welcome_to_admin/header.html"}
+<section class="content">
+    <div class="back-link">
+        <a href="/" class="btn btn-accent">Вернуться на сайт</a>
+    </div>
+
+
+    {if isset($smarty.get.end_time)}
+    <link rel="stylesheet" href="/ladmin/vendor\toastr\toastr.min.css">
+    <script src="/ladmin/vendor\toastr\toastr.min.js"></script>
+    <script>
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-center",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        } 
+    </script>
+    <script>
+
+        toastr["error"]("Срок вашего демо доступа истек ", "Внимание")
+    </script>
+    {/if}
+
+    <div class="container-center lg animated slideInDown" style="margin: 0 auto">
+
+
+        {if $success}
+
+
+        <div class="view-header">
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-mail"></i>
+            </div>
+            <div class="header-title">
+                <h3>Вам отправлено письмо</h3>
+                <small>
+                    Осталось совсем немного.
+                </small>
+            </div>
+        </div>
+
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                Вам нужно перейти по ссылке в письме, для подтверждения регистрации.<br>
+                <b class="text-warning">Ссылка доступна в течении 2 часов.</b>
+
+            </div>
+        </div>
+
+
+        {else}
+
+        {if $error}
+        <script>
+                toastr["error"]("{$error}", "Ошибка")
+        </script>
+        {/if}
+
+        <div class="view-header">
+            <div class="header-icon">
+                <i class="pe page-header-icon pe-7s-add-user"></i>
+            </div>
+            <div class="header-title">
+                <h3>Регистрация {if $is_trial}<span class="text-warning">Демо-доступа</span>{/if}</h3>
+                <small>
+                    Введите данные для регистрации.
+                </small>
+            </div>
+        </div>
+
+        {if $is_trial}
+            <h4 class="text-danger">Внимание!</h4> 
+            <b class="text-danger">После регистрации, вам будет доступно в течении 24 часов;</b><br>
+
+            <ul>
+                <li><b>10 лицензий на эмуляторы приборов</b><br>
+                    Данные на приборах будут фиктивными. Подключения к приборам не будет.<br>
+                    Это сделано в целях снижения нагрузи на сервер
+                </li>
+
+                <li><b>Полная свобода действий</b><br>
+                    Вы можете удалять, добавлять, редактировать все что хотите в течении срока действия вашего личного кабинета
+                </li>
+            </ul>
+        {/if}
+        <br>
+
+        <div class="panel panel-filled">
+            <div class="panel-body">
+                <form id="registrationForm" novalidate="" method="post" autocomplete="off">
+                    <div class="row">
+                        <div  id="email_label" class="form-group col-lg-12">
+                            <label>Email</label>
+                            <input type="" value="" id="email" class="form-control" name="email">
+                            <span class="help-block small">Ваша почта будет являться и логином.<br>
+                                <b class="text-info">После регистрации на нее будет выслано письмо с инструкией и ссылкой активации.</b></span>
+                            </div>
+                            <div id="password_label" class="form-group col-lg-6">
+                                <label>Пароль</label>
+                                <input type="password" value="" id="password" class="form-control" name="password">
+                                <span class="help-block small">Введите ваш новый пароль</span>
+                            </div>
+                            <div id="repeatpassword_label" class="form-group col-lg-6">
+                                <label>Подтверждение пароля</label>
+                                <input type="password" value="" id="repeatpassword" class="form-control" name="repeatpassword">
+                                <span class="help-block small">Повторите пароль</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-accent" id="register_action" type="submit">Регистрация</button>
+                            <a class="btn btn-default" href="/auth">Войти</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {/if}
+        </div>
+    </section>
+    <script type="text/javascript" src="/ladmin/scripts/models/user.js"></script>
+    <script type="text/javascript" src="/ladmin/scripts/views/registration.js"></script>
+    {include file="welcome_to_admin/footer.html"}

@@ -1,0 +1,60 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">
+                    <% if( concentrator.get('id') ){ %>
+                    {$lang->line('concentrator.edit')}
+                    <% }else{ %>
+                    {$lang->line('concentrator.add')}
+                    <% } %>
+                </h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group has-warning">
+                        <label for="converter_id">Конвертер<sup>*</sup></label> 
+                        <select class="form-control" id="converter_id">
+                            <option value="0">Выбрать конвертер</option>
+                            <% _.each( converters.toArray() , function( converter ){ %>
+                                <option value="<%= converter.get('id') %>"
+                                    <% if( converter.get('id') == concentrator.get('converter_id') ){ %>selected<% } %>
+                                    ><%= converter.get_title() %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label for="mark">Марка<sup>*</sup></label> 
+                        <select class="form-control" id="mark">
+                            <option>Выбрать марку</option>
+                            <% _.each( marks.toArray() , function( mark ){ %>
+                                <option value="<%= mark.get('id') %>"><%= mark.get('title') %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="form-group has-warning" style="display: none;">
+                        <label for="model">Модель<sup>*</sup></label> 
+                        <select class="form-control" id="model">
+                        </select>
+                    </div>
+
+                    <div class="form-group has-warning">
+                        <label for="serial">Серийный номер<sup>*</sup></label> 
+                        <input class="form-control" type="test" id="serial" value="<%= concentrator.escape('serial') %>"/>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label for="addr">Адрес<sup>*</sup></label> 
+                        <input class="form-control" type="number" id="addr" value="<%= concentrator.escape('addr') %>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Название</label> 
+                        <input class="form-control" type="text" id="title" value="<%= concentrator.escape('title') %>"/>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-accent" id="save">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>

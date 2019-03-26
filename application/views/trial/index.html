@@ -1,0 +1,64 @@
+{include file="welcome_to_admin/header.html"}
+    <section class="content">
+        <div class="back-link">
+            <a href="/" class="btn btn-accent">Вернуться на сайт</a>
+        </div>
+
+        <div class="container-center lg animated slideInDown" style="margin: 0 auto">
+
+
+            <div class="view-header">
+                <div class="header-icon">
+                    <i class="pe page-header-icon pe-7s-add-user"></i>
+                </div>
+                <div class="header-title">
+                    <h3>Регистрация <span class="text-warning">пробной</span> версии</h3>
+                    <small>
+                        Введите данные для регистрации.
+                    </small>
+                </div>
+            </div>
+            <b class="text-danger">Это важно для прочтения!</b><br>
+            После регистрации вам будет доступно 10 устройств на 2 недели.<br>
+            Этот срок подразумевает, что вы успеете решить - подходит наш сервис для ваших целей или нет.<br>
+            Если подходит, то в течении 2 недель вы можете оплатить наши услуги и пользоваться системой.<br>
+            Если вы считаете, что не подходит, то ваш аккаунт будет заморожен, а данные, введенные вами в систему - удалены. <br><br>
+
+            Полезные ссылки:<br>
+            <a href="/cart">Инструкция по оплате</a><br>
+            <a href="/cart">Договор</a><br>
+
+            <br>
+
+            <div class="panel panel-filled">
+                <div class="panel-body">
+                    <form action="index.html" id="loginForm" novalidate="">
+                        <div class="row">
+                            <div class="form-group col-lg-12">
+                                <label>Email</label>
+                                <input type="" value="" id="username" class="form-control" name="">
+                                <span class="help-block small">Ваша почта будет являться и логином.<br>
+                                <b class="text-info">После регистрации на нее будет выслано письмо с инструкией и ссылкой активации.</b></span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>Пароль</label>
+                                <input type="password" value="" id="password" class="form-control" name="">
+                                <span class="help-block small">Введите ваш новый пароль</span>
+                            </div>
+                            <div class="form-group col-lg-6">
+                                <label>RПодтверждение пароля</label>
+                                <input type="password" value="" id="repeatpassword" class="form-control" name="">
+                                <span class="help-block small">Повторите пароль</span>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-accent">Попробовать</button>
+                            <a class="btn btn-default" href="/auth">Войти</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </section>
+{include file="welcome_to_admin/footer.html"}

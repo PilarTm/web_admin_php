@@ -1,0 +1,92 @@
+    {include file="admin/helpers/head.html"}
+
+
+    {include file="admin/helpers/logo.html"}
+    {include file="admin/helpers/nav.html"}
+
+    <script>
+
+        var id = {$id};
+
+    </script>
+
+
+    <!-- Main content-->
+    <section class="content">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="header-title">
+                        <h3 class="m-b-xs"> Конвертер: <span id="converter_title">{$converter->get_title()}</span></h3>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="panel panel-filled">
+                        <div class="panel-body" id="converter_info"></div>
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="row">
+
+            <div class="col-lg-12 col-xs-12">
+                <div class="panel panel-filled">
+
+                    <div class="panel-body" id="e_counters_list"></div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+
+<script type="text/template" id="modal_edit_tpl">
+    {include file="admin/e_counters/helpers/modal_edit.html" hide_converter=true}
+</script>
+
+<script type="text/template" id="modal_delete_tpl">
+    {include file="admin/e_counters/helpers/modal_delete.html"}
+</script>
+<script type="text/template" id="e_counters_list_tpl">
+    {include file="admin/e_counters/helpers/list.html" hide_converter=true}
+</script>
+
+
+<script type="text/template" id="converter_info_tpl">
+    {include file="admin/converters/helpers/info.html"}
+</script>
+
+<script src="/ladmin/scripts/models/mark_converters.js"></script>
+<script src="/ladmin/scripts/models/model_converters.js"></script>
+<script src="/ladmin/scripts/models/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/models/model_e_counters.js"></script>
+<script src="/ladmin/scripts/models/e_counters.js"></script>
+<script src="/ladmin/scripts/models/converters.js"></script>
+
+
+<script src="/ladmin/scripts/collections/mark_converters.js"></script>
+<script src="/ladmin/scripts/collections/model_converters.js"></script>
+<script src="/ladmin/scripts/collections/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/model_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/e_counters.js"></script>
+<script src="/ladmin/scripts/collections/converters.js"></script>
+
+
+<script src="/ladmin/scripts/views/converters/model_edit.js"></script>
+<script src="/ladmin/scripts/views/converters/helpers/title.js"></script>
+<script src="/ladmin/scripts/views/converters/helpers/e_counters_list.js"></script>
+<script src="/ladmin/scripts/views/e_counters/model_edit.js"></script>
+<script src="/ladmin/scripts/views/e_counters/model_delete.js"></script>
+<script src="/ladmin/scripts/views/converters/helpers/info.js"></script>
+<script src="/ladmin/scripts/views/converters/converter.js"></script>
+
+
+{include file="admin/helpers/footer.html"}

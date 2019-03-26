@@ -1,0 +1,48 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Значение</th>
+                <th>Свойство</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Сериный номер</td>
+                <td><%= counter.get('serial') %></td>
+            </tr>
+            <tr>
+                <td>Название</td>
+                <td><%= counter.get_title() %></td>
+            </tr>
+            <tr>
+                <td>Опросный номер</td>
+                <td><%= counter.get('num_485') %></td>
+            </tr>
+            <% if( counter.get('converter_id') ){ %>
+            <tr>
+                <td>Конвертер</td>
+                <td>
+                    <a href="/admin/converter/<%= converter.get('id') %>">
+                        <%= converter.get_title() %>
+                    </a>
+                </td>
+            </tr>
+            <% } %>
+            <% if( counter.get('concentrator_id') ){ %>
+            <tr>
+                <td>Концентратор</td>
+                <td>
+                    <a href="/admin/concentrator/<%= concentrator.get('id') %>">
+                        <%= concentrator.get_title() %>
+                    </a>
+                </td>
+            </tr>
+            <% } %>
+            <tr>
+                <td>Модель</td>
+                <td><%= model.get('title') %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,48 @@
+<div class="vertical-timeline-block">
+    <div class="vertical-timeline-icon">
+        <i class="fa fa-calendar"></i>
+    </div>
+    <div class="vertical-timeline-content">
+        <div class="p-sm">
+            <span class="vertical-date pull-right"> <small>{$iLog->time}</small> </span>
+            <span class="vertical-date">  
+                <small>
+                    <a href="/admin/log/user/{$iLog->get_user()->id}"
+                        class="text-muted"
+                        >{$iLog->get_user()->email}</a> 
+                </small>
+            </span><br>
+            <small class="
+            {if $iLog->action == "delete"}
+            text-danger
+            {elseif $iLog->action == "update"}
+            text-warning
+            {else}
+            text-success
+            {/if}">
+            {if $iLog->action == "delete"}
+            Удалил
+            {elseif $iLog->action == "update"}
+            Изменил
+            {else}
+            Добавил
+            {/if} :
+        </small>
+        <small>
+            
+            {if $iLog->table == "converters"}
+                Конвертер: <a href="/admin/converter/{$iLog->id_table}">{$iLog->get_object()->get_title()}</a>
+            {elseif $iLog->table == "place"}
+                Место: {$iLog->get_object()->title}
+            {elseif $iLog->table == "e_counters"}
+                Электросчетчик:  <a href="/admin/e_counters/{$iLog->id_table}">{$iLog->get_object()->get_title()}</a>
+            {elseif $iLog->table == "concentrator"}
+                Концентратор:  <a href="/admin/concentrator/{$iLog->id_table}">{$iLog->get_object()->get_title()}</a>
+            {/if}
+            <br>
+        </small>
+    </span>
+
+</div>
+</div>
+</div>

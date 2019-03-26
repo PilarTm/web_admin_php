@@ -1,0 +1,547 @@
+{include file="admin/helpers/head.html"}
+
+
+{include file="admin/helpers/logo.html"}
+{include file="admin/helpers/nav.html"}
+
+<script>
+
+  var id = {$id};
+
+</script>
+
+
+<!-- Main content-->
+<section class="content">
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="header-title">
+          <h3 class="m-b-xs"> Электросчетчик: 
+            <i class="glyphicon glyphicon-flash"></i>
+            <span class="c-accent" id="e_counter_title"></span></h3>
+          </div>
+          <hr>
+        </div>
+      </div>
+
+
+
+      <div class="row">
+
+        <div class="col-lg-6 col-md-6 col-xs-12">
+          <div class="panel panel-filled">
+            <div class="panel-body" id="e_counter_info"></div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-xs-12">
+
+          <div class="row">
+
+            {assign var=first_id value=""}
+            {assign var=id value=""}
+            {foreach from=$meter->parameters() item=iParameter key=i}
+
+
+            {if preg_match("/ACTIVE/",$iParameter->ident)}
+            {assign var=id value="active_chart"}
+            {elseif preg_match("/REACTIVE/",$iParameter->ident)}
+            {assign var=id value="reactive_chart"}
+            {elseif preg_match("/FULL/",$iParameter->ident)}
+            {assign var=id value="full_chart"}
+            {elseif preg_match("/POWER/",$iParameter->ident)}
+            {assign var=id value="power_chart"}
+            {elseif preg_match("/CURRENT/",$iParameter->ident)}
+            {assign var=id value="current_chart"}
+            {elseif preg_match("/VOLTAGE/",$iParameter->ident)}
+            {assign var=id value="voltage_chart"}
+            {/if }
+
+            {if !$i}
+            {assign var=first_id value=$id}
+            {/if}
+
+            <div class="col-lg-6 col-md-6 col-xs-12 chart_pane" data-chart_id="{$id}"
+            style="{if $first_id != $id}display:none;{/if}"
+            >
+
+            <div class="panel">
+              <div class="panel-body">
+                <div class="small">
+                  <span class="c-white">{$iParameter->title}</span>
+                </div>
+                <div class="m-t-sm">
+                  {if !$meter->count_pluck_value_by_parameter_by_date($iParameter->id , $now)}
+                  <h4 class="text-muted">Данных нет</h4>
+                  {/if}
+                  <small class="c-white"></small>
+                  <div class="sparkline_{$iParameter->id}"></div>
+                  <small class="slight"></small>
+
+
+                  <script type="text/javascript">
+                    $(".sparkline_{$iParameter->id}").sparkline([
+                      {$meter->pluck_value_by_parameter_by_date($iParameter->id , $now)}
+                      ], {
+                        type: 'line',
+                        lineColor: '#fff',
+                        lineWidth: 3,
+                        fillColor: '#393D47',
+                        height: 70,
+                        width: '100%'
+                      });
+                    </script>
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            {foreachelse}
+            Нет параметров
+            {/foreach}
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="btn-group panel-body">
+            <a class="btn btn-default"  
+            href="/admin/e_counters/{$meter->id}/archive/{$prev|date_format:'%Y/%m/%d'}">
+            {$prev|date_format:'%d.%m.%Y'}
+          </a>
+
+
+          <button class="btn btn-default disabled" type="button">
+            <b style="color:#fff">{$now|date_format:'%d.%m.%Y'}</b>
+          </button>
+          <a class="btn btn-default"  
+          href="/admin/e_counters/{$meter->id}/archive/{$next|date_format:'%Y/%m/%d'}">
+          {$next|date_format:'%d.%m.%Y'}
+        </a>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row">
+
+
+    <div class="col-lg-12 col-xs-12">
+
+      <div class="panel panel-filled">
+
+        <div class="panel-body">
+
+          <h4>Показания</h4>
+          <div class="tabs-container">
+            <ul class="nav nav-tabs">
+
+              {assign var=active_tab value="last"}
+              {if $now->getTimestamp() != $smarty.now}
+                {assign var=active_tab value="24hours"}
+              {/if}
+
+              <li {if $active_tab == "last"}class="active"{/if}>
+                <a data-toggle="tab" href="#tab-1" aria-expanded="true"> Последние</a>
+              </li>
+              <li {if $active_tab == "24hours"}class="active"{/if}>
+                <a data-toggle="tab" href="#tab-2" aria-expanded="false">За 24 часа</a>
+              </li>
+            </ul>
+            <div class="tab-content">
+              <div id="tab-1" class="tab-pane {if $active_tab == "last"}active{/if}">
+                <div class="panel-body">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Параметр</th>
+                        <th>Значение</th>
+                        <th>Дата</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {foreach from=$meter->parameters() item=iParameter}
+                      <tr>
+                        <td>{$iParameter->title}</td>
+                        {assign var=val value=$meter->last_value_by_parameter($iParameter->id)}
+                        <td>{if $val->id}{$val->value}{else}Нет данных{/if}</td>
+                        <td>{if $val->id}{$val->time}{else}--{/if}</td>
+                      </tr>
+                      {foreachelse}
+                      <tr>
+                        <td colspan="100">Нет данных</td>
+                      </tr>
+                      {/foreach}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div id="tab-2" class="tab-pane  {if $active_tab == "24hours"}active{/if}">
+
+                <br>
+
+                <div class="tabs-container">
+                  <ul class="nav nav-tabs" id="tab_panel_parameters">
+                    {assign var=find_active value=0}
+                    {if $meter->isset_parameter_like("ENERGY_ACTIVE_TARIF")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="active" href="#e-active" aria-expanded="true"> Активная энергия</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                    {if $meter->isset_parameter_like("ENERGY_REACTIVE_TARIF")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="reactive" href="#e-reactive" aria-expanded="false">Реактивная энергия</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                    {if $meter->isset_parameter_like("ENERGY_FULL_TARIF")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="full" href="#e-full" aria-expanded="false">Полная энергия</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                    {if $meter->isset_parameter_like("VOLTAGE")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="voltage" href="#voltage" aria-expanded="false">Напряжение</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                    {if $meter->isset_parameter_like("CURRENT")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="current" href="#current" aria-expanded="false">Ток</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                    {if $meter->isset_parameter_like("POWER")}
+                    <li {if !$find_active}class="active"{/if}>
+                      <a data-toggle="tab" 
+                      data-cahrt="power" href="#power" aria-expanded="false" >Мощность</a>
+                    </li>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+                  </ul>
+
+                  {assign var=find_active value=0}
+                  <div class="tab-content">
+
+                    {if $meter->isset_parameter_like("ENERGY_ACTIVE_TARIF")}
+                    <div id="e-active" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Тариф 1</th>
+                              <th class="text-center">Тариф 2</th>
+                              <th class="text-center">Сумма</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_active_energy($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+                    {if $meter->isset_parameter_like("ENERGY_REACTIVE_TARIF")}
+                    <div id="e-reactive" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Тариф 1</th>
+                              <th class="text-center">Тариф 2</th>
+                              <th class="text-center">Сумма</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_reactive_energy($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+                    {if $meter->isset_parameter_like("ENERGY_FULL_TARIF")}
+                    <div id="e-full" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Тариф 1</th>
+                              <th class="text-center">Тариф 2</th>
+                              <th class="text-center">Сумма</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_full_energy($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+                    {if $meter->isset_parameter_like("VOLTAGE")}
+                    <div id="voltage" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Фаза 1</th>
+                              <th class="text-center">Фаза 2</th>
+                              <th class="text-center">Фаза 3</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_voltage($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div> 
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+                    {if $meter->isset_parameter_like("CURRENT")}
+                    <div id="current" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Фаза 1</th>
+                              <th class="text-center">Фаза 2</th>
+                              <th class="text-center">Фаза 3</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_current($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+
+                    {if $meter->isset_parameter_like("POWER")}
+                    <div id="power" class="tab-pane {if !$find_active}active{/if}">
+
+                      <div class="panel-body">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th class="text-center">Фаза 1</th>
+                              <th class="text-center">Фаза 2</th>
+                              <th class="text-center">Фаза 3</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {foreach from=$meter->get_power($now) item=row}
+                            <tr>
+                              {foreach from=$row item=cell key=index}
+                              {if $index == "time"}
+                              <td style="width:50px;">{$cell}</td>
+                              {else}
+                              <td class="text-center">
+                                {if !$cell->id}
+                                --
+                                {else}
+                                {$cell->value}
+                                {/if}
+                              </td>
+                              {/if}
+                              {/foreach}
+                            </tr>
+                            {/foreach}
+                          </tbody>
+                        </table>
+                      </div>
+
+                    </div>
+                    {if !$find_active}{assign var=find_active value=1}{/if}
+                    {/if}
+
+                  </div>
+                </div>
+              </div>
+              <div id="tab-3" class="tab-pane">
+                <div class="panel-body">
+                  Архив
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="row">
+
+
+    <div class="col-lg-12 col-xs-12">
+      <h4>Последние действия</h4>
+      <div class="v-timeline vertical-container">
+
+        {foreach from=$meter->last_log(10) item=iLog}
+        {include file="admin/log/helpers/list_even.html"}
+        {/foreach}
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+</section>
+</div>
+
+<script type="text/template" id="e_counter_info_tpl">
+  {include file="admin/e_counters/helpers/info.html"}
+</script>
+
+
+<script src="/ladmin/scripts/models/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/models/model_e_counters.js"></script>
+<script src="/ladmin/scripts/models/e_counters.js"></script>
+<script src="/ladmin/scripts/models/converters.js"></script>
+<script src="/ladmin/scripts/models/concentrator.js"></script>
+
+<script src="/ladmin/scripts/collections/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/model_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/e_counters.js"></script>
+
+<script src="/ladmin/scripts/views/e_counters/helpers/info.js"></script>
+<script src="/ladmin/scripts/views/e_counters/helpers/title.js"></script>
+<script src="/ladmin/scripts/views/e_counters/e_counter.js"></script>
+
+
+<script type="text/javascript">
+
+  $('#tab_panel_parameters').on("click" , "li" , function(e){
+    $('.chart_pane').each(function(i,el){
+      var action = $(el).data('chart_id') == $(e.target).data('cahrt')+"_chart" ? "show" : "hide"
+      $(el)[action]()
+    })
+    
+  })
+
+</script>
+
+
+{include file="admin/helpers/footer.html"}  

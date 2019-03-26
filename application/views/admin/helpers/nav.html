@@ -1,0 +1,63 @@
+{if !isset($active_tab)}
+    {assign var="active_tab" value="main"}
+{/if}
+{if !isset($active_nav)}
+    {assign var="active_nav" value="main"}
+{/if}
+
+<aside class="navigation">
+        <nav>
+            <ul class="nav luna-nav">
+                <li {if $active_tab == "main"}class="active"{/if}>
+                    <a href="/admin">Главная</a>
+                </li>
+                <li {if $active_tab == "places"}class="active"{/if}>
+                    <a href="/admin/places">{$lang->line('place.title')}</a>
+                </li>
+                <li {if $active_tab == "devices"}class="active"{/if}>
+                    <a href="#monitoring" data-toggle="collapse" aria-expanded="false">
+                        Устройства<span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="monitoring" class="nav nav-second {if $active_tab != "devices"}collapse{/if}">
+                        <li {if $active_nav == "converters"}class="active"{/if}>
+                            <a href="/admin/converters">
+                                <i class="glyphicon glyphicon-transfer"></i> 
+                                {$lang->line("converters.title")}</a>
+                        </li>
+                        <li {if $active_nav == "concentrator"}class="active"{/if}>
+                            <a href="/admin/concentrator">
+                                <i class="glyphicon glyphicon-magnet"></i>
+                                {$lang->line("concentrators.title")}</a>
+                        </li>
+                        <li {if $active_nav == "e_counters"}class="active"{/if}>
+                            <a href="/admin/e_counter"> 
+                            <i class="glyphicon glyphicon-flash"></i>
+                        Электросчетчики</a>
+                        </li>
+                        {*
+                        <li {if $active_nav == "w_counters"}class="active"{/if}>
+                            <a href="/admin/w_counter"> Водосчетчики</a>
+                        </li>
+                        <li {if $active_nav == "h_counters"}class="active"{/if}>
+                            <a href="/admin/h_counter"> Теплосчетчики</a>
+                        </li>
+                            *}
+                    </ul>
+                </li>
+                
+{*
+                <li><a href="/admin/reports">Отчеты</a></li>
+                *}
+                <li>
+                    <a href="#extras" data-toggle="collapse" aria-expanded="false">
+                        Учетная запись <span class="sub-nav-icon"> <i class="stroke-arrow"></i> </span>
+                    </a>
+                    <ul id="extras" class="nav nav-second collapse">
+                        <li><a href="profile.htm">Настройка</a></li>
+                    </ul>
+                </li>
+                <li><a href="/admin/logout">Выход</a></li>
+                
+            </ul>
+        </nav>
+    </aside>

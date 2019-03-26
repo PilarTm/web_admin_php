@@ -1,0 +1,78 @@
+<table id="tableExample3" class="table table-striped table-hover dataTable no-footer" role="grid">
+    <thead>
+        <tr role="row">
+            <th></th>
+            <th></th>
+            <th>Название</th>
+            <th>Марка</th>
+            {if !isset($hide_converter)}
+            <th>Подключен к</th>
+            {/if}
+            <th>Серийный номер</th>
+            <th>Опросный номер</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% if( !e_counters_list.length ){ %>
+        <tr>
+            <td colspan="100">Список пуст.</td>
+        </tr>
+        <% } %>
+        <% _.each( e_counters_list.toArray() , function( counter ){ %>
+        <% var model = models.findWhere({ id : counter.get('model_id')}) %>
+        <tr role="row" class="odd"  id="<%= counter.cid %>">
+            <td class="action_table delete"><a href="#" class="pe-7s-close-circle"></a></td>
+            <td class="action_table edit"><a href="#" class="pe-7s-pen"></a></td>
+            <td>
+                <i class="glyphicon glyphicon-flash"></i>
+                <a href="/admin/e_counters/<%= counter.get('id') %>">
+                    <%= counter.get_title() %>
+                </a>
+            </td>
+            <td>
+                <% if( typeof model != "undefined" ){ %>
+                <%= model.get('title') %>
+                <% }else{ %>
+                --
+                <% } %>
+            </td>
+            {if !isset($hide_converter)}
+            <td>
+                <% var conv = converters.findWhere({ id : counter.get('converter_id') } ) %>
+                <% var conc = concentrators.findWhere({ id : counter.get('concentrator_id') } ) %>
+                <% if( typeof conc != "undefined" ){ %>
+                <i class="glyphicon glyphicon-magnet"></i>
+                    <a href="/admin/concentrator/<%= conc.get('id') %>">
+                    <%= conc.get_title() %>
+                </a>
+                <% }else if ( typeof conv != "undefined" ){ %>
+                <i class="glyphicon glyphicon-transfer"></i>
+                <a href="/admin/converter/<%= conv.get('id') %>">
+                    <%= conv.get_title() %>
+                </a>
+                <% } %>
+            </td>
+            {/if}
+            <td><%= counter.escape('serial') %></td>
+            <td><%= counter.escape('num_485') %></td>
+        </tr>
+        <% }) %>
+        {if !$Self->IsFullLicences()}
+        <tfoot>
+            <tr>
+                <th colspan="100" style="width:100%;" class="action_table" id="add_e_counter">
+                    <a href="#" class="pe-7s-plus"></a>
+                </th>
+            </tr>
+        </tfoot>
+        {else}
+        <tfoot>
+            <tr>
+                <th colspan="100" style="width:100%;" class="action_table" id="add_e_counter">
+                    <div class="alert alert-warning">Вы достигли лимита лицензий</div>
+                </th>
+            </tr>
+        </tfoot>
+        {/if}
+    </tbody>
+</table>

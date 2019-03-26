@@ -1,0 +1,47 @@
+<table id="tableExample3" class="table table-striped table-hover dataTable no-footer" role="grid">
+    <thead>
+        <tr role="row">
+            <th></th>
+            <th></th>
+            <th>Название</th>
+            <th>Ip Адрес</th>
+            <th>Порт</th>
+            <th>Mодель</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <% if( !converter_list.length ){ %>
+        <tr>
+            <td colspan="100">Список пуст.</td>
+        </tr>
+        <% } %>
+        <% _.each( converter_list.toArray() , function( converter ){ %>
+        <% var mode = models.findWhere({ id : converter.get('model_id') }) %>
+        <tr role="row" class="odd"  id="<%= converter.cid %>">
+            <td class="action_table delete"><a href="#" class="pe-7s-close-circle"></a></td>
+            <td class="action_table edit"><a href="#" class="pe-7s-pen"></a></td>
+            <td>
+                <i class="glyphicon glyphicon-transfer"></i>
+                <a href="/admin/converter/<%= converter.get('id') %>"><%= converter.get_title() %></a></td>
+            <td><%= converter.escape('ip') %></td>
+            <td><%= converter.escape('port') %></td>
+            <td>
+                <% if( typeof mode == "undefined" ){ %>
+                    --
+                <% }else{ %>
+                    <%= mode.get('title') %>
+                <% } %>
+
+            </td>
+        </tr>
+        <% }) %>
+        <tfoot>
+            <tr>
+                <th colspan="100" style="width:100%;" class="action_table" id="add_converter">
+                    <a href="#" class="pe-7s-plus"></a>
+                </th>
+            </tr>
+        </tfoot>
+    </tbody>
+</table>

@@ -1,0 +1,29 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">
+                    Регистрация пользователя
+                </h4>
+            </div>
+            <div class="modal-body" >
+                <div class="form-group has-warning">
+                    <label for="model">Email<sup>*</sup></label> 
+                    <input class="form-control" id="email" value="<%= user.escape('email') %>"/>
+                </div>
+                <div class="form-group has-warning">
+                    <label for="model">Пароль<sup>*</sup></label> 
+                    <input type="password" class="form-control" id="password" value="<%= user.escape('password') %>"/>
+                </div>
+                <div class="form-group has-warning">
+                    <label for="model">Подтверждение пароля<sup>*</sup></label> 
+                    <input type="password" class="form-control" id="repeatpassword" value="<%= user.escape('repeatpassword') %>"/>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-default disabled" id="registration">Зарегестрировать</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+{include file="admin/helpers/head.html"}
+
+
+{include file="admin/helpers/logo.html"}
+{include file="admin/helpers/nav.html"}
+
+<!-- Main content-->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header-title">
+                    <h3 class="m-b-xs">{$lang->line("concentrators.title")}</h3>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12 col-xs-12">
+                <div class="panel panel-filled">
+
+                    {if !$coverters|count}
+
+                    <div class="panel-body">
+                        <b class="text-danger">У вас нет ни одного конвертера в системе.</b><br>
+                        <a href="/admin/converters/">Перейти на страницу добавления</a>
+                    </div>
+
+                    {else}
+                    <div class="panel-body table-responsive" id="concentrator_list"></div>
+                    {/if}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/template" id="concentrator_list_tpl">
+    {include file="admin/concentrator/helpers/list.html"}
+</script>
+
+
+<script type="text/template" id="modal_edit_concentrator_tpl">
+    {include file="admin/concentrator/helpers/modal_edit.html"}
+</script>
+
+<script type="text/template" id="modal_delete_concentrator_tpl">
+    {include file="admin/concentrator/helpers/modal_delete.html"}
+</script>
+
+<script type="text/javascript" src="/ladmin/scripts/models/mark_concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/model_concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/converters.js"></script>
+
+
+<script src="/ladmin/scripts/collections/mark_concentrator.js"></script>
+<script src="/ladmin/scripts/collections/model_concentrator.js"></script>
+<script src="/ladmin/scripts/collections/concentrator.js"></script>
+<script src="/ladmin/scripts/collections/converters.js"></script>
+
+
+<script src="/ladmin/scripts/views/concentrator/helpers/model_edit.js"></script>
+<script src="/ladmin/scripts/views/concentrator/helpers/model_delete.js"></script>
+<script src="/ladmin/scripts/views/concentrator/helpers/list.js"></script>
+<script src="/ladmin/scripts/views/concentrator/index.js"></script>
+
+
+{include file="admin/helpers/footer.html"}

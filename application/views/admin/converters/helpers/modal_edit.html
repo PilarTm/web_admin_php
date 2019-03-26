@@ -1,0 +1,55 @@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title">
+                    <% if( converter.get('id') ){ %>
+                    Редактирование конвертера
+                    <% }else{ %>
+                    Добавление конвертера
+                    <% } %>
+                </h4>
+            </div>
+            <div class="modal-body">
+                    <div class="form-group has-warning">
+                        <label for="mark">Марка<sup>*</sup></label> 
+                        <select class="form-control" id="mark">
+                            <option>Выбрать марку</option>
+                            <% _.each( marks.toArray() , function( mark ){ %>
+                                <option value="<%= mark.get('id') %>"><%= mark.get('title') %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="form-group has-warning" style="display: none;">
+                        <label for="model">Модель<sup>*</sup></label> 
+                        <select class="form-control" id="model">
+                        </select>
+                    </div>
+                    <div class="form-group has-warning"><label for="ip">Ip<sup>*</sup></label> 
+                        <input type="text" class="form-control" id="ip" placeholder="127.0.0.1"
+                        value="<%= converter.escape('ip') %>">
+                    </div>
+                    <div class="form-group has-warning"><label for="port">Порт<sup>*</sup></label> 
+                        <input type="number" class="form-control" id="port" placeholder="50"
+                        value="<%= converter.escape('port') %>">
+                    </div>
+                    <div class="form-group"><label for="login">Логин</label> 
+                        <input type="text" class="form-control" id="login" placeholder="admin"
+                        value="<%= converter.escape('login') %>">
+                    </div>
+                    <div class="form-group"><label for="password">Пароль</label> 
+                        <input type="text" class="form-control" id="password" placeholder="****"
+                        value="<%= converter.escape('password') %>">
+                    </div>
+                    <div class="form-group"><label for="title">Название</label> 
+                        <input type="text" class="form-control" id="title" placeholder="Название 1"
+                        value="<%= converter.escape('title') %>">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-accent" id="save">Сохранить</button>
+                </div>
+            </div>
+        </div>
+    </div>

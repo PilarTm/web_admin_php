@@ -1,0 +1,39 @@
+<nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <div id="mobile-menu">
+                    <div class="left-nav-toggle">
+                        <a href="#">
+                            <i class="stroke-hamburgermenu"></i>
+                        </a>
+                    </div>
+                </div>
+                <a class="navbar-brand" href="index.htm">
+                    {$brand}
+                    <span>v{$version}</span>
+                </a>
+            </div>
+                    {if $Self->droped_at != ""}
+            <span class="navbar-form navbar-left text-danger" style="padding: 9px;
+
+font-weight: bold;">
+            Ваш личный кабинет будет удален через: 
+            {assign var=hour value=((($Self->droped_at|strtotime) - $smarty.now )/60/60)|intval}
+            {$hour}ч
+                </span>
+        {/if}
+
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class=" profil-link">
+                        <a href="#">
+
+
+                            <span class="profile-address">{$Self->email}</span>
+                            <img src="/ladmin/images/profile.png" class="img-circle" alt="">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>

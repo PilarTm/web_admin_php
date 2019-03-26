@@ -1,0 +1,131 @@
+{include file="admin/helpers/head.html"}
+
+
+{include file="admin/helpers/logo.html"}
+{include file="admin/helpers/nav.html"}
+
+<script>
+    var id = {$concentrator->id}
+</script>
+
+<!-- Main content-->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="header-title">
+                    <h3 class="m-b-xs">{$lang->line("concentrator.title")}</h3>
+                </div>
+                <hr>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12 col-xs-12">
+
+                <div class="tabs-container">
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a data-toggle="tab" href="#ecounters" aria-expanded="true"> 
+                                {$lang->line("ecounters.title")}
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a data-toggle="tab_dis" href="#vcounters" aria-expanded="false">
+                                {$lang->line("vcounters.title")}
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a data-toggle="tab_dis" href="#hcounters" aria-expanded="false">
+                                {$lang->line("hcounters.title")}
+                            </a>
+                        </li>
+                        <li class="disabled">
+                            <a data-toggle="tab_dis" href="#icounters" aria-expanded="false">
+                                {$lang->line("icounters.title")}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="ecounters" class="tab-pane active">
+                            <div class="panel-body" id="ecounters_list">
+                            </div>
+                        </div>
+                        <div id="vcounters" class="tab-pane">
+                            <div class="panel-body" id="vcounters_list">
+                            </div>
+                        </div>
+                        <div id="hcounters" class="tab-pane">
+                            <div class="panel-body" id="hcounter_list">
+                            </div>
+                        </div>
+                        <div id="icounters" class="tab-pane">
+                            <div class="panel-body" id="icounters_list">
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="text/template" id="concentrator_list_tpl">
+    {include file="admin/concentrator/helpers/list.html"}
+</script>
+
+
+<script type="text/template" id="modal_edit_concentrator_tpl">
+    {include file="admin/concentrator/helpers/modal_edit.html"}
+</script>
+
+<script type="text/template" id="modal_delete_concentrator_tpl">
+    {include file="admin/concentrator/helpers/modal_delete.html"}
+</script>
+
+<script type="text/template" id="ecounters_list_tpl">
+    {include file="admin/e_counters/helpers/list.html" hide_converter=true}
+</script>
+
+
+<script type="text/template" id="modal_edit_tpl">
+    {include file="admin/e_counters/helpers/modal_edit.html" hide_converter=true}
+</script>
+
+<script type="text/template" id="modal_delete_tpl">
+    {include file="admin/e_counters/helpers/modal_delete.html"}
+</script>
+
+
+<script type="text/javascript" src="/ladmin/scripts/models/mark_concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/model_concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/concentrator.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/converters.js"></script>
+<script src="/ladmin/scripts/models/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/models/model_e_counters.js"></script>
+<script type="text/javascript" src="/ladmin/scripts/models/e_counters.js"></script>
+
+
+<script src="/ladmin/scripts/collections/mark_concentrator.js"></script>
+<script src="/ladmin/scripts/collections/model_concentrator.js"></script>
+<script src="/ladmin/scripts/collections/mark_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/model_e_counters.js"></script>
+<script src="/ladmin/scripts/collections/concentrator.js"></script>
+<script src="/ladmin/scripts/collections/converters.js"></script>
+<script src="/ladmin/scripts/collections/e_counters.js"></script>
+
+
+<script src="/ladmin/scripts/views/concentrator/helpers/model_edit.js"></script>
+<script src="/ladmin/scripts/views/concentrator/helpers/model_delete.js"></script>
+<script src="/ladmin/scripts/views/e_counters/helpers/list.js"></script>
+<script src="/ladmin/scripts/views/e_counters/model_edit.js"></script>
+<script src="/ladmin/scripts/views/e_counters/model_delete.js"></script>
+<script src="/ladmin/scripts/views/concentrator/concentrator.js"></script>
+
+
+{include file="admin/helpers/footer.html"}

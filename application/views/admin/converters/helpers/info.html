@@ -1,0 +1,28 @@
+<div class="table-responsive">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Значение</th>
+                <th>Свойство</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Ip</td>
+                <td><%= converter.get('ip') %></td>
+            </tr>
+            <tr>
+                <td>Порт</td>
+                <td><%= converter.get('port') %></td>
+            </tr>
+            <tr>
+                <td>Название</td>
+                <td><%= converter.get_title() %></td>
+            </tr>
+            <tr>
+                <td>Модель</td>
+                <td><%= model.get('title') %></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
